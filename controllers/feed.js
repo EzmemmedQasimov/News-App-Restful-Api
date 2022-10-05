@@ -17,8 +17,6 @@ exports.getPosts = (req, res, next) => {
 };
 
 exports.createPost = (req, res, next) => {
-  const title = req.body.title;
-  const content = req.body.content;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).json({
@@ -26,11 +24,19 @@ exports.createPost = (req, res, next) => {
       errors: errors.array(),
     });
   }
+  console.log(req.file);
+  if (!req.file) {
+    return res.status(422).json({
+      message: "File doesnt exsist!",
+    });
+  }
+  const imageUrl = req.file.path;
+  const title = req.body.title;
+  const content = req.body.content;
   const post = new Post({
     title: title,
     content: content,
-    imageUrl:
-      "https://learnenglish.britishcouncil.org/sites/podcasts/files/styles/430x261_4/public/2021-09/RS-1138994168_805_1.jpeg?itok=j2_zn9Ey",
+    imageUrl: imageUrl,
     creator: { name: "Əzməmməd" },
   });
   post
