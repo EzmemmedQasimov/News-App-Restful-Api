@@ -17,9 +17,11 @@ router.put(
             return Promise.reject("Email already in use.");
           }
         });
-      })
+      }),
   ],
   authController.signup
 );
+
+router.post("/login", authController.login);
 
 module.exports = router;
