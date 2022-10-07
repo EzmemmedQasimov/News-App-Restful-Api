@@ -5,6 +5,9 @@ const multer = require("multer");
 const path = require("path");
 const app = express();
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
 const feedRoutes = require("./routes/feed");
 const authRoutes = require("./routes/auth");
 
@@ -51,6 +54,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/feed", feedRoutes);
 app.use("/auth", authRoutes);
 
