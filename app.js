@@ -5,8 +5,8 @@ const multer = require("multer");
 const path = require("path");
 const app = express();
 
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger.json");
 
 const feedRoutes = require("./routes/feed");
 const authRoutes = require("./routes/auth");
@@ -54,7 +54,10 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.get("/", (req, res) => {
+  res.redirect("/api-docs");
+});
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/feed", feedRoutes);
 app.use("/auth", authRoutes);
 
@@ -64,7 +67,7 @@ mongoose
   )
   .then((result) => {
     console.log("connected!");
-    app.listen(8080);
+    app.listen(8081);
   })
   .catch((err) => {
     console.log(err);
